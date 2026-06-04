@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Error Fatality Systems</title>
+<style>
+body{margin:0;background:#000;color:#00ff66;font-family:Consolas,monospace;overflow:hidden}
+.screen{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;box-sizing:border-box}
+.hidden{display:none}
+h1,h2,p{margin:10px;max-width:900px}
+.glow{text-shadow:0 0 10px #00ff66}
+.heart{font-size:4rem;animation:pulse 1.5s infinite}
+@keyframes pulse{50%{transform:scale(1.15)}}
+button{padding:12px 22px;background:#000;color:#00ff66;border:1px solid #00ff66;cursor:pointer}
+.small{font-size:.85rem;opacity:.8}
+#msg{color:#ff5555}
+canvas{position:fixed;inset:0;z-index:-1}
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+<!-- Coloca el mp3 en la misma carpeta del html -->
+<audio id="cumpleAudio" src="cumplea_o_feli_anuel.mp3"></audio>
+
+<div id="s1" class="screen"><h1 class="glow">INICIANDO ERROR FATALITY SYSTEMS...</h1><p>██████████ 100%</p></div>
+<div id="s2" class="screen hidden"><h1>ACCESO CONCEDIDO</h1><p>Profesor detectado.</p></div>
+<div id="s3" class="screen hidden"><h1>🎮 PERSONAJE DESBLOQUEADO</h1><h2>DR. RODRIGO</h2></div>
+<div id="s4" class="screen hidden"><h2>ESTADÍSTICAS</h2><p>INTELIGENCIA ██████████</p><p>PROGRAMACIÓN ██████████</p><p>PACIENCIA █████████▌</p><p>DETECCIÓN DE ERRORES ██████████</p></div>
+<div id="s5" class="screen hidden"><h2>🏆 LOGROS</h2><p>Sobrevivió a generaciones de alumnos</p><p>Encontró un ; faltante en segundos</p><p>Explicó programación sin explotar</p></div>
+<div id="s6" class="screen hidden"><h2>MISIÓN PRINCIPAL</h2><p>Formar ingenieros funcionales</p><p>██████████ 100%</p></div>
+
+<div id="exam" class="screen hidden">
+<h2>EXAMEN SORPRESA</h2>
+<p>¿Fernanda está enojada?</p>
+<label><input type="radio" id="si"> Sí</label><br>
+<label><input type="radio" id="no"> No</label><br><br>
+<button onclick="enviar()">ENVIAR RESPUESTA</button>
+<p id="msg"></p>
+</div>
+
+<div id="s10" class="screen hidden"><h1>Yo nunca me enojo profe...</h1></div>
+<div id="s11" class="screen hidden"><h1>Bueno...</h1></div>
+<div id="s12" class="screen hidden"><h1>Casi nunca 😇</h1><div class="heart">💚</div></div>
+<div id="s13" class="screen hidden"><h1>Gracias por todo lo que nos enseñó.</h1></div>
+<div id="s14" class="screen hidden"><h1>FELIZ CUMPLEAÑOS<br>A MI PROFE FAVORITO 🎉</h1></div>
+<div id="s15" class="screen hidden"><h1>Y perdón por copiarle su cumpleaños 😔😂</h1></div>
+<div id="s16" class="screen hidden"><h1>FIN DEL REPORTE</h1></div>
+<div id="s17" class="screen hidden">
+<h1>Atentamente:</h1>
+<h2>Su alumna fav*<br>Fernanda Olvera 💚</h2>
+<p class="small">*Dato pendiente de confirmación por parte del profesor.</p>
+<div class="heart">💚</div>
+</div>
+
+<script>
+const canvas=document.getElementById('matrix');
+const ctx=canvas.getContext('2d');
+canvas.width=innerWidth; canvas.height=innerHeight;
+const letters='010101ERRORFATALITY';
+const drops=Array(Math.floor(canvas.width/20)).fill(1);
+function draw(){
+ctx.fillStyle='rgba(0,0,0,.08)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle='#00ff66'; ctx.font='15px monospace';
+for(let i=0;i<drops.length;i++){
+ const text=letters[Math.floor(Math.random()*letters.length)];
+ ctx.fillText(text,i*20,drops[i]*20);
+ if(drops[i]*20>canvas.height&&Math.random()>0.975)drops[i]=0;
+ drops[i]++;
+}}
+setInterval(draw,50);
+
+function show(id){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+}
+
+setTimeout(()=>show('s2'),3000);
+setTimeout(()=>show('s3'),5000);
+setTimeout(()=>show('s4'),8000);
+setTimeout(()=>show('s5'),14000);
+setTimeout(()=>show('s6'),22000);
+setTimeout(()=>show('exam'),26000);
+
+document.getElementById('si').addEventListener('click',()=>{
+ document.getElementById('msg').textContent='ERROR 404: Esa opción no está disponible 😈';
+ document.getElementById('si').checked=false;
+});
+
+function enviar(){
+ if(!document.getElementById('no').checked){
+   document.getElementById('msg').textContent='Seleccione la respuesta correcta 😎';
+   return;
+ }
+ show('s10');
+ setTimeout(()=>show('s11'),2000);
+ setTimeout(()=>show('s12'),3500);
+ setTimeout(()=>show('s13'),6500);
+
+ setTimeout(()=>{
+   show('s14');
+   const a=document.getElementById('cumpleAudio');
+   a.currentTime=0;
+   a.play();
+   a.onended=function(){
+      show('s15');
+      setTimeout(()=>show('s16'),4000);
+      setTimeout(()=>show('s17'),6000);
+   }
+ },10500);
+}
+</script>
+</body>
+</html>
